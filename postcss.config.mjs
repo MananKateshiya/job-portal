@@ -5,6 +5,9 @@ const config = {
 module.exports = {
   theme: {
     extend: {
+      screen:{
+        '2xl': '1300px'
+      },
       animation: {
         'border-anim': 'borderMove 5s linear infinite',
       },

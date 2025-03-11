@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${JetBrains_Mono.variable} 
-        min-h-screen w-full mx-auto border-2 p-2 border-amber-500 `}
+        min-h-screen px-10 w-full mx-auto border-2 p-2 border-amber-500 `}
       >
         {children}
       </body>
