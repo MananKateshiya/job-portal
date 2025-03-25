@@ -5,10 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     try {
-
+        await connectMongoDB();
         const searchParams = request.nextUrl.searchParams;
         const _id = searchParams.get('id');
-        await connectMongoDB();
         const totalCount = await JobDetailModel.countDocuments();
         const limit = parseInt(searchParams.get('limit') || '5');
         const page = parseInt(searchParams.get('page') || '1');
@@ -16,7 +15,6 @@ export async function GET(request: NextRequest) {
         const skip = (page - 1) * limit;
         const hasNext = (totalPages > page)
         const hasPrev = (page > 1)
-
 
         if (!_id || _id === undefined) {
             const Jobs = await JobDetailModel.find({})
@@ -45,7 +43,6 @@ export async function GET(request: NextRequest) {
             )
         } else {
             const Job = await JobDetailModel.findById(_id)
-
 
             if (!Job) {
                 return NextResponse.json({

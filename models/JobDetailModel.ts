@@ -26,8 +26,8 @@ export interface JobDetail {
         points: string[]; // Array of strings
     }[];
     selected_points: number[]; // Array of category objects
-    _createdAt: Date;
-    _updatedAt: Date;
+    createdAt: any;
+    updatedAt: any;
 }
 export interface PaginatedResponse {
     pagination: {

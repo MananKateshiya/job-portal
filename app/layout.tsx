@@ -10,7 +10,6 @@ const JetBrains_Mono = localfont({
       style: 'normal',
       weight: 'normal'
     },
-
   ],
   variable: '--font-jetbrains',
 })
@@ -26,7 +25,6 @@ export default function RootLayout({
 
 }: Readonly<{
   children: React.ReactNode
-
 }>) {
   return (
     <html lang="en">
