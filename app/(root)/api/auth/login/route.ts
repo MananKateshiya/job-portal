@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { generateToken } from "@/lib/auth";
 import connectMongoDB from "@/lib/mongodb";
 
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
     await connectMongoDB();
     try {
         const { email, password } = await request.json();
@@ -21,7 +21,7 @@ export default async function POST(request: NextRequest) {
             { status: 400 }
         );
 
-        const token = generateToken(user._id.toString());
+        const token = await generateToken(user._id.toString());
         return NextResponse.json({ token });
 
     } catch (error) {

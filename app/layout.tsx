@@ -32,6 +32,9 @@ export default function RootLayout({
         className={`${JetBrains_Mono.variable} 
         min-h-screen px-10 w-full mx-auto border-2 p-2 border-amber-500 `}
       >
+        <div className=' border-2 border-amber-500'>
+          <h1 className='justify-center p-2 text-center items-center text-2xl font-extrabold'>Job Portal</h1>
+        </div>
         {children}
 
       </body>

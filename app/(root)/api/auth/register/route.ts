@@ -3,7 +3,7 @@ import connectMongoDB from "@/lib/mongodb";
 import { UserModel } from "@/models/UsersModel";
 import bcrypt from "bcrypt";
 
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
     await connectMongoDB();
     try {
         const { name, email, password } = await request.json();

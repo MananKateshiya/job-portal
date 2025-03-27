@@ -1,20 +1,17 @@
 import JobDetailCard from '@/components/JobDetailCard'
 import { getCriticalInfo } from '@/lib/JobCardDetails/getCriticalInfo';
 import { PaginatedResponse } from '@/models/JobDetailModel';
+import { NextRequest } from 'next/server';
 
 import React, { Suspense } from 'react'
 
-async function Home() {
+async function Home(req: NextRequest) {
 
 
   const jobData: PaginatedResponse = await getCriticalInfo();
 
   return (
     <main className='w-full mx-auto'>
-      <div className=' border-2 border-amber-500'>
-        <h1 className='justify-center p-2 text-center items-center text-2xl font-extrabold'>Job Portal</h1>
-      </div>
-
       <div className='flex justify-between'>
         <section className='flex-col w-full  xl:max-w-1/3'>
           {jobData?.Jobs?.map((job) => (

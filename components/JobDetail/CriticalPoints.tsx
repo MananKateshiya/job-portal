@@ -42,7 +42,7 @@ async function CriticalPoints({ data, points }: { data: JobDetail, points: JobDe
                 <ul className='list-disc list-outside w-fit pl-6 overflow-auto'>
                     {points.map((point) => (
                         point.points.map((p) => (
-                            <li key={point.category_id}>{p}</li>
+                            <li key={Math.random()}>{p}</li>
                         ))
                     ))}
                 </ul>
