@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         );
 
         const token = await generateToken(user._id.toString());
-        return NextResponse.json({ token });
+        return NextResponse.json({ token, success: true, }, { status: 200 });
 
     } catch (error) {
         return NextResponse.json({ error: (error as Error).message }, { status: 400 });

@@ -1,14 +1,30 @@
 "use client"
 
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useActionState } from 'react'
 import { registerAction } from '@/actions/authActions';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function RegisterForm() {
-    const [state, action, isPending] = useActionState(registerAction, undefined);
 
+    const actionReturnDataSkeleton = {
+        errors: {},
+        serverError: null,
+        success: false,
+        name: "",
+        email: "",
+    };
+
+    const [state, action, isPending] = useActionState(registerAction, actionReturnDataSkeleton);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (state.success) {
+            router.push("/login");
+        }
+    }, [state.success, router])
 
     return (
         <form
@@ -30,7 +46,7 @@ function RegisterForm() {
                     placeholder='Enter username'
                     className='w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-300 ease-in-out'
                 />
-                {state?.errors?.name && (
+                {state?.errors.name && (
                     <div className='error my-2 text-pink-700 tracking-tight'>
                         <ul className='list-disc list-inside'>
                             {
@@ -102,7 +118,11 @@ function RegisterForm() {
                 />
                 {<p className='text-pink-700 tracking-tight my-2'>{state?.errors?.confirmPassword}</p>}
             </div>
-
+            {
+                state?.serverError && (
+                    <div className='text-pink-700 font-semibold text-center'>{state.serverError}</div>
+                )
+            }
             <div className='flex flex-col'>
                 <button
                     type='submit'

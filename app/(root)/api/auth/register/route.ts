@@ -2,19 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import connectMongoDB from "@/lib/mongodb";
 import { UserModel } from "@/models/UsersModel";
 import bcrypt from "bcrypt";
+import { ApiError } from "@/lib/errors";
 
 export async function POST(request: NextRequest) {
     await connectMongoDB();
-    try {
-        const { name, email, password } = await request.json();
-        const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = await UserModel.create({ name, email, password: hashedPassword });
-        user.save();
+    const { name, email, password } = await request.json();
+    const userExists = await UserModel.findOne({ email });
 
-        return NextResponse.json({ message: 'User registered' }, { status: 201 })
-
-    } catch (error) {
-        return NextResponse.json({ error: (error as Error).message }, { status: 400 });
+    
+    if (userExists) {
+        return NextResponse.json(
+            { error: 'User already exists', success: false },
+            { status: 409 }
+        );
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await UserModel.create({ name, email, password: hashedPassword });
+    return NextResponse.json({ message: 'User registered', success: true }, { status: 201 })
+
 }
