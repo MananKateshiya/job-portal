@@ -3,12 +3,25 @@
 
 import { loginAction } from '@/actions/authActions';
 import Link from 'next/link';
-import React, { useActionState } from 'react'
+import React, { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation';
 
 function LoginForm() {
+    const router = useRouter();
 
-    const [state, action, isPending] = useActionState(loginAction, undefined);
+    const actionReturnDataSkeleton = {
+        errors: {},
+        serverError: null,
+        success: false,
+        email: '',
+    }
+    const [state, action, isPending] = useActionState(loginAction, actionReturnDataSkeleton);
 
+    useEffect(() => {
+        if (state?.success) {
+            router.push('/')
+        }
+    }, [state?.success, router])
     return (
         <form action={action}
             className='bg-white mt-8 px-8 py-2 shadow-custom-200 rounded-lg w-full max-w-lg mx-auto space-y-4'>
@@ -35,6 +48,11 @@ function LoginForm() {
                     </div>
                 )}
             </div>
+            {
+                state.serverError && (
+                    <div className='error text-pink-700 tracking-tight text-center'>{state.serverError}</div>
+                )
+            }
             <div className='flex flex-col'>
                 <button type='submit' disabled={isPending}
                     className='w-full p-3 bg-amber-500 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-50  transition duration-300 ease-in-out cursor-pointer disabled:opacity-50'>

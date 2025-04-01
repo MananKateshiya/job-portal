@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import connectMongoDB from "@/lib/mongodb";
 import { UserModel } from "@/models/UsersModel";
 import bcrypt from "bcrypt";
-import { ApiError } from "@/lib/errors";
 
 export async function POST(request: NextRequest) {
     await connectMongoDB();
@@ -10,7 +9,6 @@ export async function POST(request: NextRequest) {
     const { name, email, password } = await request.json();
     const userExists = await UserModel.findOne({ email });
 
-    
     if (userExists) {
         return NextResponse.json(
             { error: 'User already exists', success: false },

@@ -22,7 +22,7 @@ export const registerUser = async (registerData: { name: string, email: string, 
 
 }
 export const loginUser = async (loginData: { email: string, password: string }) => {
-    try {
+   
         const response = await fetch(API_LOGIN, {
             method: 'POST',
             headers: {
@@ -34,16 +34,8 @@ export const loginUser = async (loginData: { email: string, password: string }) 
         const data = await response.json();
 
         if (!response.ok) {
-            throw new ApiError(data.error || 'Something went wrong');
+            throw new ApiError(data.error || 'Something went wrong', response.status);
         }
         return data;
-    } catch (error: any) {
-        if (error instanceof ApiError) {
-            console.error(`Login Error: ${error.message}`)
-        } else {
-            const genericError = new ApiError('Unexpected error during login',)
-            console.error('Unexpected error during login: ', error);
-            throw genericError;
-        }
-    }
+  
 }

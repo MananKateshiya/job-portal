@@ -18,5 +18,6 @@ const UserSchema = new mongoose.Schema({
         timestamps: true
     })
 
-
 export const UserModel = mongoose.models.User || mongoose.model('User', UserSchema);
+
+// export const SuperUser = mongoose.models.SuperUser || mongoose.model('SuperUser', UserSchema);
