@@ -2,6 +2,7 @@
 
 import { loginUser, registerUser } from "@/lib/HandleAuth";
 import { LoginFormSchema, RegisterFormSchema } from "@/lib/rules";
+import { createSession } from "@/lib/session";
 import { LoginFormState, RegisterFormState } from "@/lib/types";
 
 export const registerAction = async (prevState: RegisterFormState | undefined, formData: FormData): Promise<RegisterFormState> => {

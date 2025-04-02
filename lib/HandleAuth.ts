@@ -23,19 +23,20 @@ export const registerUser = async (registerData: { name: string, email: string, 
 }
 export const loginUser = async (loginData: { email: string, password: string }) => {
    
-        const response = await fetch(API_LOGIN, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginData),
-        });
 
-        const data = await response.json();
+    const response = await fetch(API_LOGIN, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+    });
 
-        if (!response.ok) {
-            throw new ApiError(data.error || 'Something went wrong', response.status);
-        }
-        return data;
-  
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new ApiError(data.error || 'Something went wrong');
+    }
+    return data;
+
 }

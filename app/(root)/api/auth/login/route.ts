@@ -3,29 +3,28 @@ import { UserModel } from "@/models/UsersModel";
 import bcrypt from "bcrypt";
 import { generateToken } from "@/lib/auth";
 import connectMongoDB from "@/lib/mongodb";
+import { createSession } from "@/lib/session";
 
 export async function POST(request: NextRequest) {
     await connectMongoDB();
-    try {
-        const { email, password } = await request.json();
-        const user = await UserModel.findOne({ email });
 
-        if (!user) return NextResponse.json(
-            { error: "User not found" },
-            { status: 404 }
-        );
+    const { email, password } = await request.json();
+    const user = await UserModel.findOne({ email });
 
-        const decode = await bcrypt.compare(password, user.password);
-        if (!decode) return NextResponse.json(
-            { error: "Invalid Credentials" },
-            { status: 400 }
-        );
+    if (!user) return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+    );
 
-        const token = await generateToken(user._id.toString());
-        return NextResponse.json({ token, success: true, }, { status: 200 });
+    const decode = await bcrypt.compare(password, user.password);
+    if (!decode) return NextResponse.json(
+        { error: "Invalid Credentials" },
+        { status: 400 }
+    );
 
-    } catch (error) {
-        return NextResponse.json({ error: (error as Error).message }, { status: 400 });
-    }
+    const token = await generateToken(user._id.toString());
+    await createSession(JSON.stringify(token));
+    return NextResponse.json({ token, success: true, }, { status: 200 });
+
 
 }
