@@ -1,15 +1,24 @@
-import { cookies } from "next/headers";
+'use server'
 
-export async function createSession(payload: string) {
-  const cookieStore = await cookies();
-  
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  
-  cookieStore.set("sessionData", payload, {
-    httpOnly: true,
-    secure: false, // Only secure in production
-    sameSite: 'lax',
-    expires: expiresAt,
-    path: '/',
-  });
+import { cookies } from 'next/headers'
+
+export async function createSession(cookieName: string, payload: string) {
+    const cookieStore = cookies();
+    (await cookieStore).set(cookieName, payload, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        path: "/",
+        maxAge: 60 * 60 * 24,
+    });
+}
+
+export async function getCookie(name: string, cookie: string) {
+    console.log(`${name}`, (await cookies()).get(cookie));
+    return (await cookies()).get(cookie);
+}
+
+export async function deleteCookie(name: string) {
+
+    return (await cookies()).delete(name);
 }

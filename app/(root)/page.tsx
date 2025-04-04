@@ -1,15 +1,12 @@
 import JobDetailCard from '@/components/JobDetailCard'
 import { getCriticalInfo } from '@/lib/JobCardDetails/getCriticalInfo';
 import { PaginatedResponse } from '@/models/JobDetailModel';
-import { NextRequest } from 'next/server';
-
 import React, { Suspense } from 'react'
 
-async function Home(req: NextRequest) {
+async function Home() {
 
 
   const jobData: PaginatedResponse = await getCriticalInfo();
-
   return (
     <main className='w-full mx-auto'>
       <div className='flex justify-between'>

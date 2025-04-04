@@ -1,8 +1,8 @@
 "use server";
 
+
 import { loginUser, registerUser } from "@/lib/HandleAuth";
 import { LoginFormSchema, RegisterFormSchema } from "@/lib/rules";
-import { createSession } from "@/lib/session";
 import { LoginFormState, RegisterFormState } from "@/lib/types";
 
 export const registerAction = async (prevState: RegisterFormState | undefined, formData: FormData): Promise<RegisterFormState> => {
@@ -74,6 +74,7 @@ export const loginAction = async (prevState: any, formData: FormData): Promise<L
                 email: fieldErrors.email,
                 password: fieldErrors.password
             },
+            token: '',
             serverError: null,
             success: false,
             email: formData.get('email')?.toString(),
@@ -82,10 +83,10 @@ export const loginAction = async (prevState: any, formData: FormData): Promise<L
 
     try {
         const registerData = await loginUser(validateFields.data);
-
         if (registerData.success) {
             return {
                 errors: {},
+                token: registerData.token,
                 serverError: null,
                 success: true,
             }
@@ -96,6 +97,7 @@ export const loginAction = async (prevState: any, formData: FormData): Promise<L
 
         return {
             errors: {},
+            token: '',
             serverError: errorMessage,
             success: false,
             email: formData.get('email')?.toString(),
@@ -103,6 +105,7 @@ export const loginAction = async (prevState: any, formData: FormData): Promise<L
     }
     return {
         errors: {},
+        token: '',
         serverError: null,
         success: false,
         email: formData.get('email')?.toString(),

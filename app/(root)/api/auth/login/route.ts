@@ -3,7 +3,6 @@ import { UserModel } from "@/models/UsersModel";
 import bcrypt from "bcrypt";
 import { generateToken } from "@/lib/auth";
 import connectMongoDB from "@/lib/mongodb";
-import { createSession } from "@/lib/session";
 
 export async function POST(request: NextRequest) {
     await connectMongoDB();
@@ -22,9 +21,8 @@ export async function POST(request: NextRequest) {
         { status: 400 }
     );
 
-    const token = await generateToken(user._id.toString());
-    await createSession(JSON.stringify(token));
-    return NextResponse.json({ token, success: true, }, { status: 200 });
+    const token = await generateToken(user._id.toString()); //generating jwt
 
+    return NextResponse.json({ token, success: true, }, { status: 200 });
 
 }

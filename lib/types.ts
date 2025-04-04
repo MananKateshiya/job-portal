@@ -16,6 +16,7 @@ export interface LoginFormState {
     email?: string[];
     password?: string[];
   },
+  token: string;
   serverError: string | null;
   success: boolean;
   email?: string;

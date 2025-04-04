@@ -5,12 +5,14 @@ import { loginAction } from '@/actions/authActions';
 import Link from 'next/link';
 import React, { useActionState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
+import { createSession } from '@/lib/session';
 
 function LoginForm() {
     const router = useRouter();
 
     const actionReturnDataSkeleton = {
         errors: {},
+        token: '',
         serverError: null,
         success: false,
         email: '',
@@ -18,9 +20,13 @@ function LoginForm() {
     const [state, action, isPending] = useActionState(loginAction, actionReturnDataSkeleton);
 
     useEffect(() => {
-        if (state?.success) {
-            router.push('/')
+        const successRes = async () => {
+            if (state?.success) {
+                await createSession("sessionUser", state.token);
+                router.push('/')
+            }
         }
+        successRes();
     }, [state?.success, router])
     return (
         <form action={action}
