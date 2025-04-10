@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localfont from "next/font/local"
 import "./globals.css";
+import Link from "next/link";
+import NavBar from "@/components/Navigation/NavBar";
 
 
 const JetBrains_Mono = localfont({
@@ -32,11 +34,14 @@ export default function RootLayout({
         className={`${JetBrains_Mono.variable} 
         min-h-screen px-10 w-full mx-auto border-2 p-2 border-amber-500 `}
       >
-        <div className=' border-2 border-amber-500'>
-          <h1 className='justify-center p-2 text-center items-center text-2xl font-extrabold'>Job Portal</h1>
-        </div>
-        {children}
+        <Link href={'/'} className='flex border-2 border-amber-500 justify-center p-2 text-center text-2xl font-extrabold'>
+          <h1>
+            Job Portal
+          </h1>
+        </Link>
 
+        <NavBar />
+        {children}
       </body>
     </html>
   );

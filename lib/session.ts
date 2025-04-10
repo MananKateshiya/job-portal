@@ -1,10 +1,11 @@
 'use server'
 
 import { cookies } from 'next/headers'
+import { decryptToken, verifyToken } from './auth';
 
 export async function createSession(cookieName: string, payload: string) {
-    const cookieStore = cookies();
-    (await cookieStore).set(cookieName, payload, {
+    const cookieStore = await cookies();
+    cookieStore.set(cookieName, payload, {
         httpOnly: true,
         secure: false,
         sameSite: 'lax',
@@ -12,12 +13,19 @@ export async function createSession(cookieName: string, payload: string) {
         maxAge: 60 * 60 * 24,
     });
 }
+export async function getCurrentUser() {
+    const cookieStore = await cookies();
+    const session = cookieStore.get('session')?.value;
 
-export async function getCookie(name: string, cookie: string) {
-    console.log(`${name}`, (await cookies()).get(cookie));
-    return (await cookies()).get(cookie);
+    if (session) {
+        const user = await decryptToken(session);
+        return session;
+    }
 }
 
+export async function getCookie(name: string) {
+    return (await cookies()).get(name)?.value;
+}
 export async function deleteCookie(name: string) {
 
     return (await cookies()).delete(name);

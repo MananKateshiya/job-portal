@@ -14,6 +14,17 @@ export async function verifyToken(req: NextRequest) {
         const decode = jwt.verify(token, `${process.env.JWT_SECRET}`) as { userId: string };
         return decode.userId;
     } catch (error) {
+        console.error("Decryption Error: ", error)
+    }
+}
 
+export async function decryptToken(session: string) {
+    try {
+
+        return await jwt.verify(session, process.env.JWT_SECRET as string, { algorithms: ['HS256'] })
+
+    } catch (error) {
+        console.error("Decryption Error: ", error)
+        throw new Error('Cookie not found')
     }
 }

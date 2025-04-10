@@ -1,6 +1,5 @@
 'use client';
 
-
 import { loginAction } from '@/actions/authActions';
 import Link from 'next/link';
 import React, { useActionState, useEffect } from 'react'
@@ -21,8 +20,9 @@ function LoginForm() {
 
     useEffect(() => {
         const successRes = async () => {
+
             if (state?.success) {
-                await createSession("sessionUser", state.token);
+                await createSession("session", state.token);
                 router.push('/')
             }
         }

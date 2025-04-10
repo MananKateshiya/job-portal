@@ -83,7 +83,7 @@ export const loginAction = async (prevState: any, formData: FormData): Promise<L
 
     try {
         const registerData = await loginUser(validateFields.data);
-        if (registerData.success) {
+        if (registerData.sucess) {
             return {
                 errors: {},
                 token: registerData.token,
