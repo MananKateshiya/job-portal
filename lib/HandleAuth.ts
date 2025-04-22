@@ -1,6 +1,6 @@
 import { ApiError } from "./errors";
-const API_REGISTER = 'http://localhost:3000/api/auth/register'
-const API_LOGIN = 'http://localhost:3000/api/auth/login'
+const API_REGISTER = `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`
+const API_LOGIN = `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`
 
 export const registerUser = async (registerData: { name: string, email: string, password: string }) => {
 
@@ -22,7 +22,7 @@ export const registerUser = async (registerData: { name: string, email: string, 
 
 }
 export const loginUser = async (loginData: { email: string, password: string }) => {
-   
+
 
     const response = await fetch(API_LOGIN, {
         method: 'POST',

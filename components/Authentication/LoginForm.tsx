@@ -23,6 +23,7 @@ function LoginForm() {
 
             if (state?.success) {
                 await createSession("session", state.token);
+            
                 router.push('/')
             }
         }

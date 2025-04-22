@@ -1,7 +1,7 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { decryptToken, verifyToken } from './auth';
+import { decryptToken } from './auth';
 
 export async function createSession(cookieName: string, payload: string) {
     const cookieStore = await cookies();
@@ -19,7 +19,7 @@ export async function getCurrentUser() {
 
     if (session) {
         const user = await decryptToken(session);
-        return session;
+        return user;
     }
 }
 

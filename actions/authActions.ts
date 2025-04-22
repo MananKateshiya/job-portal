@@ -3,7 +3,9 @@
 
 import { loginUser, registerUser } from "@/lib/HandleAuth";
 import { LoginFormSchema, RegisterFormSchema } from "@/lib/rules";
+import { deleteCookie } from "@/lib/session";
 import { LoginFormState, RegisterFormState } from "@/lib/types";
+import { redirect } from "next/navigation";
 
 export const registerAction = async (prevState: RegisterFormState | undefined, formData: FormData): Promise<RegisterFormState> => {
 
@@ -59,7 +61,7 @@ export const registerAction = async (prevState: RegisterFormState | undefined, f
     };
 };
 
-export const loginAction = async (prevState: any, formData: FormData): Promise<LoginFormState> => {
+export const loginAction = async (prevState: LoginFormState, formData: FormData): Promise<LoginFormState> => {
 
     const validateFields = LoginFormSchema.safeParse({
         email: formData.get('email'),
@@ -83,7 +85,7 @@ export const loginAction = async (prevState: any, formData: FormData): Promise<L
 
     try {
         const registerData = await loginUser(validateFields.data);
-        if (registerData.sucess) {
+        if (registerData.success) {
             return {
                 errors: {},
                 token: registerData.token,
@@ -111,4 +113,8 @@ export const loginAction = async (prevState: any, formData: FormData): Promise<L
         email: formData.get('email')?.toString(),
     }
 
+}
+export const logout = async () => {
+    await deleteCookie('session');
+    redirect('/login');
 }

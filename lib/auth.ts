@@ -21,10 +21,12 @@ export async function verifyToken(req: NextRequest) {
 export async function decryptToken(session: string) {
     try {
 
-        return await jwt.verify(session, process.env.JWT_SECRET as string, { algorithms: ['HS256'] })
+
+        const decode = await jwt.verify(session, process.env.JWT_SECRET as string, { algorithms: ['HS256'] });
+        return decode;
 
     } catch (error) {
         console.error("Decryption Error: ", error)
-        throw new Error('Cookie not found')
+
     }
 }
