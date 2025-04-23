@@ -9,8 +9,16 @@ enum JobType {
     Remote = "Remote",
     WorkFromHome = "Work From Home",
 }
+interface Point {
+    point: string;
+    isSelected: boolean;
+  }
+  
+  interface Category {
+    name: string;
+    points: Point[];
+  }
 
-// Define the interface for TypeScript
 export interface JobDetail {
     _id?: string;
     job_title: string;
@@ -20,15 +28,12 @@ export interface JobDetail {
     job_type: JobType;
     tags: string[];
     special: boolean;
-    details: {
-        category_id: number;
-        name: string;
-        points: string[]; // Array of strings
-    }[];
-    selected_points: number[]; // Array of category objects
+    details: Category[];
     createdAt: any;
     updatedAt: any;
 }
+
+
 export interface PaginatedResponse {
     pagination: {
         total: number;
@@ -40,7 +45,7 @@ export interface PaginatedResponse {
     },
     Jobs: JobDetail[];
 }
-// Define the Mongoose schema
+
 const JobDetailSchema = new mongoose.Schema(
     {
         job_title: {
@@ -49,7 +54,7 @@ const JobDetailSchema = new mongoose.Schema(
         },
         company: {
             type: String,
-            required: [true, "Enter the Company Name"], // Fixed typo in "Comapny"
+            required: [true, "Enter the Company Name"],
         },
         location: {
             type: String,
@@ -72,27 +77,33 @@ const JobDetailSchema = new mongoose.Schema(
         ],
         special: {
             type: Boolean,
-            required: [false, "is Special?"],
+            required: false,
             default: false
         },
         details: [
             {
                 category_id: {
-                    type: Number,
-                    required: true,
+                    type: mongoose.Schema.Types.ObjectId,
+                    auto: true
                 },
                 name: {
                     type: String,
-                    required: true,
+                    required: [true, "Category must have a name"],
                 },
                 points: [
                     {
-                        type: String,
-                        required: true,
-                    },
-                ],
-            },
-        ],
+                        point: {
+                            type: String,
+                            required: [true, "Point must have a value"]
+                        },
+                        isSelected: {
+                            type: Boolean,
+                            default: false
+                        }
+                    }
+                ]
+            }
+        ]
     },
     {
         timestamps: true,

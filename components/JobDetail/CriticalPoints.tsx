@@ -4,7 +4,7 @@ import React from 'react'
 import { format, differenceInDays } from 'date-fns';
 
 async function CriticalPoints({ data, points }: { data: JobDetail, points: JobDetail['details'] }) {
-
+ 
     const convertDate = (date: any) => {
         try {
             const createdAt = new Date(date);
@@ -37,13 +37,21 @@ async function CriticalPoints({ data, points }: { data: JobDetail, points: JobDe
                 </div>
             </div>
             <hr className='my-4 bg-slate-300 mx-4 h-[2px]' />
-            {/* salary, perks, bullet points, last active, response time   */}
             <div className='mx-8 my-4'>
                 <ul className='list-disc list-outside w-fit pl-6 overflow-auto'>
-                    {points.map((point) => (
-                        point.points.map((p) => (
-                            <li key={Math.random()}>{p}</li>
-                        ))
+                    {points.map((category, index) => (
+                        <li key={index} className='py-2'>
+                            <h3 className='font-semibold'>{category.name}</h3>
+                            <ul>
+                                {category.points.map((point, pointIndex) => (
+                                    <li
+                                        key={pointIndex}
+                                    >
+                                        {point.isSelected && point.point}
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
                     ))}
                 </ul>
             </div>

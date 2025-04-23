@@ -15,7 +15,7 @@ async function Home() {
         <JobSearchBar />
       </div>
       <div className='flex justify-between'>
-        <section className='flex-col w-full  xl:max-w-1/3'>
+        <section className='flex-col w-full xl:max-w-3xl'>
        
           {jobData?.Jobs?.map((job) => (
             <Suspense key={job._id} fallback={<div>Loading job...</div>}>
