@@ -33,7 +33,7 @@ async function CriticalPoints({ data, points }: { data: JobDetail, points: JobDe
                 </div>
                 <div className='flex gap-x-2'>
                     <CalendarClock className='text-slate-500' />
-                    <span>{`Date posted: ${convertDate(data.createdAt)}`}</span>
+                    <span className='tracking-tighter'>{`Date posted: ${convertDate(data.createdAt)}`}</span>
                 </div>
             </div>
             <hr className='my-4 bg-slate-300 mx-4 h-[2px]' />

@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { getCriticalInfo } from '@/lib/JobCardDetails/getCriticalInfo'
 import { JobDetail } from '@/models/JobDetailModel';
-import JobDetailCard from '../JobDetailCard';
-
 
 async function JobDetailStaging() {
 
@@ -15,7 +13,7 @@ async function JobDetailStaging() {
         const fetchJobs = async () => {
             try {
                 const jobData = await getCriticalInfo(page, limit);
-                setJobs(jobData.jobs);
+                setJobs(jobData.Jobs);
 
             } catch (error: any) {
                 console.error(error.message)
@@ -28,7 +26,7 @@ async function JobDetailStaging() {
 
     return (
         <div>
-         
+         <h1>JobDetailStaging</h1>
         </div>
     )
 }

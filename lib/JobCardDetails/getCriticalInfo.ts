@@ -1,6 +1,6 @@
 import { JobDetail, PaginatedResponse } from "@/models/JobDetailModel";
 
-const API_URL = 'http://localhost:3000/api'
+const API_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`
 
 export async function getCriticalInfo(page = 1, limit = 5): Promise<PaginatedResponse> {
 

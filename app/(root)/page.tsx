@@ -6,8 +6,6 @@ import React, { Suspense } from 'react'
 
 async function Home() {
 
-
-
   const jobData: PaginatedResponse = await getCriticalInfo();
   return (
     <main className='w-full mx-auto'>
@@ -15,7 +13,7 @@ async function Home() {
         <JobSearchBar />
       </div>
       <div className='flex justify-between'>
-        <section className='flex-col w-full xl:max-w-3xl'>
+        <section className='flex-col w-full xl:max-w-[576px]'>
        
           {jobData?.Jobs?.map((job) => (
             <Suspense key={job._id} fallback={<div>Loading job...</div>}>
