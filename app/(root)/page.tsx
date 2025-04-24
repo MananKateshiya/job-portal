@@ -3,10 +3,12 @@ import JobSearchBar from '@/components/JobSearchBar';
 import { getCriticalInfo } from '@/lib/JobCardDetails/getCriticalInfo';
 import { PaginatedResponse } from '@/models/JobDetailModel';
 import React, { Suspense } from 'react'
+import JobCard from './job/[id]/page';
 
 async function Home() {
 
   const jobData: PaginatedResponse = await getCriticalInfo();
+
   return (
     <main className='w-full mx-auto'>
       <div>
@@ -14,15 +16,12 @@ async function Home() {
       </div>
       <div className='flex justify-between'>
         <section className='flex-col w-full xl:max-w-[576px]'>
-       
-          {jobData?.Jobs?.map((job) => (
-            <Suspense key={job._id} fallback={<div>Loading job...</div>}>
-              <JobDetailCard id={job._id} data={job} special={job.special} />
-            </Suspense>
-          )) || <p>No jobs found</p>}
-        </section>
-        <section className='hidden lg:inline lg:max-w-full grow-1'>
 
+          <Suspense fallback={<div>Loading jobs...</div>}>
+            {jobData?.Jobs?.map((job) => (
+              <JobDetailCard key={job._id} id={job._id} data={job} special={job.special} />
+            )) || <p>No jobs found</p>}
+          </Suspense>
         </section>
       </div>
     </main>

@@ -5,10 +5,8 @@ import Link from 'next/link';
 import React, { useActionState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
 import { createSession } from '@/lib/session';
-
 function LoginForm() {
     const router = useRouter();
-
     const actionReturnDataSkeleton = {
         errors: {},
         token: '',
@@ -23,7 +21,6 @@ function LoginForm() {
 
             if (state?.success) {
                 await createSession("session", state.token);
-            
                 router.push('/')
             }
         }
