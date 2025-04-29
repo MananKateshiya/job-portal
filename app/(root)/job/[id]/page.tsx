@@ -3,7 +3,7 @@ import JobDetailCard from '@/components/JobDetailCard';
 import { getDetails } from '@/lib/JobCardDetails/getCriticalInfo'
 import React from 'react'
 
-async function JobCard({ params }: { params: { id: string } }) {
+async function page({ params }: { params: { id: string } }) {
 
 
     const { id } = await params;
@@ -25,4 +25,4 @@ async function JobCard({ params }: { params: { id: string } }) {
     )
 }
 
-export default JobCard
+export default page
