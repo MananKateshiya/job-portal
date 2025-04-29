@@ -31,6 +31,27 @@ body {
   .shadow-solid {
     box-shadow: 3px 4px 0px 0px rgba(0, 0, 0, 1)
   }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 9999px;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+
+  }
+  
+  .scrollbar-hidden { /* For Firefox */ 
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 transparent;
+
+  }
 }
 
 :root {
@@ -151,6 +172,7 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
 }
 
 @keyframes waterFlow {

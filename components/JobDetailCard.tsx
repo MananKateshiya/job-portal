@@ -5,11 +5,11 @@ import BookMarkButton from './BookMarkButton';
 import CriticalPoints from './JobDetail/CriticalPoints';
 import { JobDetail } from '@/models/JobDetailModel';
 
-async function JobDetailCard({ id, data, special }: { id: string | undefined, data: JobDetail, special: boolean }) {
+function JobDetailCard({ id, data, special }: { id: string | undefined, data: JobDetail, special?: boolean }) {
   // await new Promise(resolve => setTimeout(resolve, 2000));
 
   return (
-    <div  className='flex-col m-2 p-2 rounded-md shadow-fine bg-slate-200  cursor-pointer'>
+    <div className='flex-col m-2 p-2 rounded-md shadow-fine bg-slate-200  cursor-pointer'>
       {/* Company logo & Bookmark */}
       <div className='flex justify-between px-6 w-full items-center'>
         <div className='flex justify-around items-center gap-x-4'>
@@ -22,7 +22,7 @@ async function JobDetailCard({ id, data, special }: { id: string | undefined, da
         <BookMarkButton id="1" />
       </div>
 
-      <CriticalJobInfo id={data._id} data={data} special={special} />
+      <CriticalJobInfo id={data._id} data={data} special={true} />
 
       {/* Job Details */}
       <Suspense fallback={<span>Loading...</span>}>

@@ -17,7 +17,6 @@ async function JobCard({ params }: { params: { id: string } }) {
                 ) : (
                     <div>
                         <JobDetailCard id={jobDetails._id} data={jobDetails} special={jobDetails.special} />
-
                     </div>
 
                 )
