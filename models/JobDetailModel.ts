@@ -9,21 +9,26 @@ enum JobType {
     Remote = "Remote",
     WorkFromHome = "Work From Home",
 }
+enum JobLocation {
+    OnSite = "on-site",
+    Remote = "remote"
+}
 interface Point {
     point: string;
     isSelected: boolean;
-  }
-  
-  interface Category {
+}
+
+interface Category {
     name: string;
     points: Point[];
-  }
+}
 
 export interface JobDetail {
     _id?: string;
     job_title: string;
     company: string;
     location: string;
+    job_location: string;
     salary: string;
     job_type: JobType;
     tags: string[];
@@ -59,6 +64,11 @@ const JobDetailSchema = new mongoose.Schema(
         location: {
             type: String,
             required: [true, "Enter the Location"],
+        },
+        job_location: {
+            type: String,
+            enum: Object.values(JobLocation),
+            required: [true, "Enter job location e.g. remote or on-site"]
         },
         salary: {
             type: String,

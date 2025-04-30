@@ -1,5 +1,6 @@
 import connectMongoDB from "@/lib/mongodb";
 import { JobDetail, JobDetailModel } from "@/models/JobDetailModel";
+import { main } from "@/scripts/dev/updateData";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -36,4 +37,13 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         )
     }
+}
+
+export async function GET(request: NextRequest) {
+    const res = await main();
+    if (!res.message) {
+        return NextResponse.json({ error: "Failed", success: false })
+    }
+
+    return NextResponse.json({ message: res.message });
 }
