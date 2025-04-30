@@ -34,8 +34,8 @@ export interface JobDetail {
     tags: string[];
     special: boolean;
     details: Category[];
-    createdAt: any;
-    updatedAt: any;
+    createdAt: Date | string;
+    updatedAt: Date | string;
 }
 
 

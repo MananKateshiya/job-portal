@@ -8,6 +8,7 @@ async function JobCard({ selectedJobId }: { selectedJobId?: string }) {
       
         <div className='flex flex-col'>
             <h1>{job.job_title}</h1>
+            <p>{job._id}</p>
         </div>
 
     )
