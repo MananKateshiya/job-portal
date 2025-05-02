@@ -9,11 +9,12 @@ import React, { Suspense } from 'react'
 async function Home({
   searchParams,
 }: {
-  searchParams: { selectedJob?: string }
+  searchParams: { job?: string }
 }) {
 
-  const { selectedJob } = await searchParams || '';
-  const jobData: PaginatedResponse = await getCriticalInfo();
+  const { job } = await searchParams;
+  const jobData: PaginatedResponse = await getCriticalInfo({ page: 1, limit: 5 });
+  const selectedJobObj = jobData.Jobs.find(_job => _job._id === job) || null;
 
   return (
     <main className='w-full mx-auto'>
@@ -27,10 +28,9 @@ async function Home({
             {jobData?.Jobs?.map((job) => (
               <LinkContainer
                 key={job._id}
-                href={`/?selectedJob=${job._id}`}
-
+                href={`/?job=${job._id}`}
               >
-                <JobDetailCard id={job._id} data={job} special={job.special} />
+                <JobDetailCard id={job._id} data={job} />
               </LinkContainer>
             )) || <p>No jobs found</p>}
           </Suspense>
@@ -38,9 +38,17 @@ async function Home({
 
         <section className='w-full text-justify tracking-tight m-2 rounded-md shadow-fine bg-slate-200 cursor-pointer hidden lg:flex'>
           <div className='bg-slate-200 p-4 h-screen sticky top-0 overflow-y-auto scrollbar-hidden' >
-            {selectedJob &&
-              <JobCard selectedJobId={selectedJob} />
-            }
+            {selectedJobObj ? (
+              <JobCard selectedJobId={selectedJobObj} />
+            ) : (
+
+              <span className='text-xl text-gray-500'>
+                Select a job to view details
+              </span>
+
+
+            )}
+
           </div>
         </section>
       </div>

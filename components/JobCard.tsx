@@ -1,17 +1,18 @@
-import loading from '@/app/(root)/loading';
-import { getDetails } from '@/lib/JobCardDetails/getCriticalInfo'
-import React, { Suspense } from 'react'
+import { JobDetail } from '@/models/JobDetailModel';
+import React from 'react'
 
-async function JobCard({ selectedJobId }: { selectedJobId?: string }) {
-    const job = await getDetails(selectedJobId as string);
+async function JobCard({ selectedJobId }: { selectedJobId?: JobDetail }) {
+
+
     return (
-      
-        <div className='flex flex-col'>
-            <h1>{job.job_title}</h1>
-            <p>{job._id}</p>
+        <div className='w-full mx-auto'>
+            <h1>{selectedJobId?.job_title}</h1>
+            <p>{selectedJobId?._id}</p>
         </div>
-
     )
+
+
+
 }
 
 export default JobCard

@@ -8,14 +8,13 @@ import { convertDate } from '@/lib/helper';
 type JobDetailCardProps = {
   id: string | undefined;
   data: JobDetail;
-  special: boolean;
   href?: string;
   className?: string;
   onClick?: React.MouseEventHandler;
 }
 
 const JobDetailCard = React.forwardRef<HTMLDivElement, JobDetailCardProps>(
-  ({ id, data, special, href, className, onClick, ...props }, ref) => {
+  ({ id, data, href, className, onClick, ...props }, ref) => {
 
     // await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -41,7 +40,7 @@ const JobDetailCard = React.forwardRef<HTMLDivElement, JobDetailCardProps>(
         <div className="flex max-lg:flex-col max-lg:items-start justify-between items-center mx-8 my-2">
           <div className="flex items-center">
             <Building2 size={24} className='text-slate-500' />
-            <div className={`${special ? "animated-water-border p-2 relative mx-2" : "p-2"}`}>
+            <div className={`${data.special ? "animated-water-border p-2 relative mx-2" : "p-2"}`}>
               <h1 className="relative z-10 tracking-tight text-md select-none line-clamp-2">{data.company}</h1>
             </div>
           </div>

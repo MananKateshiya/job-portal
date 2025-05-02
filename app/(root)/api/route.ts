@@ -8,6 +8,17 @@ export async function GET(request: NextRequest) {
         await connectMongoDB();
         const searchParams = request.nextUrl.searchParams;
         const _id = searchParams.get('id');
+
+        const title = searchParams.get('title');
+        const location = searchParams.get('location');
+        const job_location = searchParams.get('job_location');
+        const job_type = searchParams.get('job_type');
+        const job_level = searchParams.get('job_level');
+        const salaryMin = searchParams.get('salaryMin');
+        const salaryMax = searchParams.get('salaryMax');
+
+
+        //pagination params
         const totalCount = await JobDetailModel.countDocuments();
         const limit = parseInt(searchParams.get('limit') || '5');
         const page = parseInt(searchParams.get('page') || '1');
@@ -16,32 +27,23 @@ export async function GET(request: NextRequest) {
         const hasNext = (totalPages > page)
         const hasPrev = (page > 1)
 
-        if (!_id || _id === undefined) {
-            const Jobs = await JobDetailModel.find({})
-                .sort({ _createdAt: -1 })
-                .skip(skip)
-                .limit(limit);
+        //query building for filters
 
-            if (!Jobs) {
-                return NextResponse.json({
-                    error: "No Job Found"
-                }, { status: 404 })
-            }
-            return NextResponse.json(
-                {
-                    Jobs,
-                    pagination: {
-                        total: totalCount,
-                        page,
-                        limit,
-                        totalPages,
-                        hasNext,
-                        hasPrev
-                    }
-                },
-                { status: 200 }
-            )
-        } else {
+        const query: any = {};
+
+        if (title) query.job_title = { $regex: title, $options: 'i' }
+        if (location) query.location = { $regex: location, $options: 'i' }
+        if (job_location) query.job_location = { $regex: job_location, $options: 'i' }
+        if (job_type) query.job_type = job_type;
+        if (job_level) query.job_level = job_level;
+        if (salaryMin || salaryMax) {
+            query.salary = {};
+            if (salaryMin) query.salary.$gte = Number(salaryMin);
+            if (salaryMax) query.salary.$lte = Number(salaryMax);
+        }
+
+
+        if (_id) {
             const Job = await JobDetailModel.findById(_id)
 
             if (!Job) {
@@ -58,7 +60,30 @@ export async function GET(request: NextRequest) {
         }
 
 
+        const Jobs = await JobDetailModel.find(query)
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
 
+        if (!Jobs || Jobs.length === 0) {
+            return NextResponse.json({
+                error: "No Job Found"
+            }, { status: 404 })
+        }
+        return NextResponse.json(
+            {
+                Jobs,
+                pagination: {
+                    total: totalCount,
+                    page,
+                    limit,
+                    totalPages,
+                    hasNext,
+                    hasPrev
+                }
+            },
+            { status: 200 }
+        )
 
     } catch (error: any) {
         console.error("Error in GET /api/jobs:", error);

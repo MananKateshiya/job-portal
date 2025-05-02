@@ -4,10 +4,14 @@ import mongoose from "mongoose";
 enum JobType {
     PartTime = "Part-Time",
     FullTime = "Full-Time",
+    Remote = "Remote"
+}
+enum JobExpLevel {
     EntryLevel = "Entry-Level",
-    Internship = "Internship",
-    Remote = "Remote",
-    WorkFromHome = "Work From Home",
+    Fresher = "Fresher",
+    Junior = "Junior",
+    Senior = "Senior",
+    Internship = "Internship"
 }
 enum JobLocation {
     OnSite = "on-site",
@@ -26,11 +30,13 @@ interface Category {
 export interface JobDetail {
     _id?: string;
     job_title: string;
+    job_description: string;
     company: string;
     location: string;
     job_location: string;
     salary: string;
     job_type: JobType;
+    job_level: JobExpLevel;
     tags: string[];
     special: boolean;
     details: Category[];
@@ -61,6 +67,10 @@ const JobDetailSchema = new mongoose.Schema(
             type: String,
             required: [true, "Enter the Company Name"],
         },
+        job_description: {
+            type: String,
+            required: [true, "Enter job description"],
+        },
         location: {
             type: String,
             required: [true, "Enter the Location"],
@@ -78,6 +88,11 @@ const JobDetailSchema = new mongoose.Schema(
             type: String,
             enum: Object.values(JobType),
             required: [true, "Enter a Job Type"],
+        },
+        job_level: {
+            type: String,
+            enum: Object.values(JobExpLevel),
+            required: [true, "Enter Job Level"]
         },
         tags: [
             {

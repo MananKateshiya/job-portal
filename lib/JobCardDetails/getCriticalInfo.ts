@@ -1,9 +1,8 @@
 import { JobDetail, PaginatedResponse } from "@/models/JobDetailModel";
-import { ApiError } from "../errors";
 
 const API_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`
 
-export async function getCriticalInfo(page = 1, limit = 5): Promise<PaginatedResponse> {
+export async function getCriticalInfo({page = 1, limit = 5}): Promise<PaginatedResponse> {
 
     const res = await fetch(`${API_URL}/?page=${page}&limit=${limit}`);
     const jobs = await res.json();

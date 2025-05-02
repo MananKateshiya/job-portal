@@ -16,7 +16,7 @@ async function page({ params }: { params: { id: string } }) {
                     <div>No Jobs Found</div>
                 ) : (
                     <div>
-                        <JobDetailCard id={jobDetails._id} data={jobDetails} special={jobDetails.special} />
+                        <JobDetailCard id={jobDetails._id} data={jobDetails} />
                     </div>
 
                 )
