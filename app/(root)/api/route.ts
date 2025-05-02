@@ -14,8 +14,8 @@ export async function GET(request: NextRequest) {
         const job_location = searchParams.get('job_location');
         const job_type = searchParams.get('job_type');
         const job_level = searchParams.get('job_level');
-        const salaryMin = searchParams.get('salaryMin');
-        const salaryMax = searchParams.get('salaryMax');
+        const salaryMin = parseInt(searchParams.get('salaryMin') || "0");
+        const salaryMax = parseInt(searchParams.get('salaryMax') || "25000");
 
 
         //pagination params
@@ -31,11 +31,21 @@ export async function GET(request: NextRequest) {
 
         const query: any = {};
 
-        if (title) query.job_title = { $regex: title, $options: 'i' }
-        if (location) query.location = { $regex: location, $options: 'i' }
-        if (job_location) query.job_location = { $regex: job_location, $options: 'i' }
-        if (job_type) query.job_type = job_type;
-        if (job_level) query.job_level = job_level;
+        if (title && title.trim() !== "") {
+            query.job_title = { $regex: title, $options: 'i' }
+        }
+        if (location && location.trim() !== "") {
+            query.location = { $regex: location, $options: "i" };
+        }
+        if (job_location && job_location.trim() !== "") {
+            query.job_location = { $regex: job_location, $options: 'i' }
+        }
+        if (job_type && job_type.trim() !== "") {
+            query.job_type = job_type;
+        }
+        if (job_level && job_level.trim() !== "") {
+            query.job_level = job_level;
+        }
         if (salaryMin || salaryMax) {
             query.salary = {};
             if (salaryMin) query.salary.$gte = Number(salaryMin);
@@ -48,6 +58,7 @@ export async function GET(request: NextRequest) {
 
             if (!Job) {
                 return NextResponse.json({
+                    Job,
                     error: "No Job Found"
                 }, { status: 404 })
             }

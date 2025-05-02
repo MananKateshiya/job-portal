@@ -13,8 +13,8 @@ async function Home({
 }) {
 
   const { job } = await searchParams;
-  const jobData: PaginatedResponse = await getCriticalInfo({ page: 1, limit: 5 });
-  const selectedJobObj = jobData.Jobs.find(_job => _job._id === job) || null;
+  const jobData: PaginatedResponse = await getCriticalInfo();
+  const selectedJobObj = jobData?.Jobs?.find(_job => _job._id === job) || null;
 
   return (
     <main className='w-full mx-auto'>

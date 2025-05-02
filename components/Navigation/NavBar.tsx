@@ -7,7 +7,7 @@ async function NavBar() {
     const user = await getCurrentUser();
 
     return (
-        <nav className='flex justify-between'>
+        <nav className='flex justify-between my-3'>
             <div>
                 <NavLink href='/' label='Home' />
             </div>

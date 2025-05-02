@@ -11,7 +11,7 @@ function JobSearchBar() {
     }
 
     return (
-        <div className='flex flex-col lg:flex-row justify-between items-center w-full max-w-3xl mx-auto mb-4 rounded-md bg-white border-2 border-gray-300 focus-within:ring-2 focus-within:ring-amber-500 transition'>
+        <div className='flex flex-col lg:flex-row justify-between items-center w-full max-w-3xl mx-auto my-3 rounded-md bg-white border-2 border-gray-300 focus-within:ring-2 focus-within:ring-amber-500 transition'>
             <div className='flex flex-col lg:flex-row flex-grow w-full'>
                 <div className='flex items-center w-full lg:w-auto'>
                     <BriefcaseBusiness size={24} className='mx-2 text-slate-500' />
