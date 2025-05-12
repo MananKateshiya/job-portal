@@ -21,3 +21,10 @@ export interface LoginFormState {
   success: boolean;
   email?: string;
 }
+
+export enum UserType {
+  Guest = "guest",
+  Admin = "admin",
+  Candidate = "candidate",
+  Recruiter = "recruiter"
+}

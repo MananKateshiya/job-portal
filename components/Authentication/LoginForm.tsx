@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { createSession } from '@/lib/session';
 function LoginForm() {
     const router = useRouter();
-    const actionReturnDataSkeleton = {
+    const actionReturnDataSkeleton = {               
         errors: {},
         token: '',
         serverError: null,

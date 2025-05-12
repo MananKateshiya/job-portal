@@ -13,7 +13,7 @@ async function Home({
 }) {
 
   const { job } = await searchParams;
-  const jobData: PaginatedResponse = await getCriticalInfo();
+  const jobData: PaginatedResponse = await getCriticalInfo({location: "CA"});
   const selectedJobObj = jobData?.Jobs?.find(_job => _job._id === job) || null;
 
   return (
@@ -56,4 +56,4 @@ async function Home({
   )
 }
 
-export default Home
+export default Home 
