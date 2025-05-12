@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import { generateToken } from "@/lib/auth";
 import connectMongoDB from "@/lib/mongodb";
 import { UserType } from "@/lib/types";
-import { createSession } from "@/lib/session";
 
 export async function POST(request: NextRequest) {
     await connectMongoDB();
@@ -23,7 +22,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
     );
 
-    const token = await generateToken(user._id.toString()); //generating jwt
+    const token = await generateToken({userId: user._id.toString(), userRole: UserType.Candidate}); //generating jwt
     return NextResponse.json({ token, success: true, }, { status: 200 });
 
 }

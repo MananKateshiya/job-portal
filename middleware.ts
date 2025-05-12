@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decryptToken } from "./lib/auth";
 import { cookies } from "next/headers";
-import { getCurrentUser } from "./lib/session";
 
 
 const PUBLIC_ROUTES = [

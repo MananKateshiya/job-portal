@@ -19,12 +19,6 @@ async function Home({
   const jobData: PaginatedResponse = await getCriticalInfo({ location: "CA" });
   const selectedJobObj = jobData?.Jobs?.find(_job => _job._id === job) || null;
 
-  const user = await getCurrentUser();
-
-  // if (!user) {
-  //    redirect('/login', RedirectType.replace);
-
-  // } else {
     return (
       <main className='w-full mx-auto'>
         <div>

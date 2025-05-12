@@ -1,6 +1,5 @@
 "use server";
 
-
 import { loginUser, registerUser } from "@/lib/HandleAuth";
 import { LoginFormSchema, RegisterFormSchema } from "@/lib/rules";
 import { deleteCookie } from "@/lib/session";
