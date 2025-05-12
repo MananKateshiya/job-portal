@@ -5,9 +5,10 @@ import Link from 'next/link';
 import React, { useActionState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
 import { createSession } from '@/lib/session';
+
 function LoginForm() {
     const router = useRouter();
-    const actionReturnDataSkeleton = {               
+    const actionReturnDataSkeleton = {
         errors: {},
         token: '',
         serverError: null,
@@ -18,8 +19,8 @@ function LoginForm() {
 
     useEffect(() => {
         const successRes = async () => {
-
             if (state?.success) {
+                console.log("server", state.serverError)
                 await createSession("session", state.token);
                 router.push('/')
             }
@@ -54,8 +55,10 @@ function LoginForm() {
             </div>
             {
                 state.serverError && (
+
                     <div className='error text-pink-700 tracking-tight text-center'>{state.serverError}</div>
                 )
+
             }
             <div className='flex flex-col'>
                 <button type='submit' disabled={isPending}

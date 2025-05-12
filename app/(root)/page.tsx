@@ -1,9 +1,12 @@
+import { logout } from '@/actions/authActions';
 import JobCard from '@/components/JobCard';
 import JobDetailCard from '@/components/JobDetailCard'
 import JobSearchBar from '@/components/JobSearchBar';
 import LinkContainer from '@/components/LinkContainer';
 import { getCriticalInfo } from '@/lib/JobCardDetails/getCriticalInfo';
+import {getCurrentUser } from '@/lib/session';
 import { PaginatedResponse } from '@/models/JobDetailModel';
+import { redirect, RedirectType } from 'next/navigation';
 import React, { Suspense } from 'react'
 
 async function Home({
@@ -13,47 +16,54 @@ async function Home({
 }) {
 
   const { job } = await searchParams;
-  const jobData: PaginatedResponse = await getCriticalInfo({location: "CA"});
+  const jobData: PaginatedResponse = await getCriticalInfo({ location: "CA" });
   const selectedJobObj = jobData?.Jobs?.find(_job => _job._id === job) || null;
 
-  return (
-    <main className='w-full mx-auto'>
-      <div>
-        <JobSearchBar />
-      </div>
-      <div className='flex justify-between'>
-        <section className='flex-col w-full xl:max-w-[576px]'>
+  const user = await getCurrentUser();
 
-          <Suspense fallback={<div>Loading jobs...</div>}>
-            {jobData?.Jobs?.map((job) => (
-              <LinkContainer
-                key={job._id}
-                href={`/?job=${job._id}`}
-              >
-                <JobDetailCard id={job._id} data={job} />
-              </LinkContainer>
-            )) || <p>No jobs found</p>}
-          </Suspense>
-        </section>
+  // if (!user) {
+  //    redirect('/login', RedirectType.replace);
 
-        <section className='w-full text-justify tracking-tight m-2 rounded-md shadow-fine bg-slate-200 cursor-pointer hidden lg:flex'>
-          <div className='bg-slate-200 p-4 h-screen sticky top-0 overflow-y-auto scrollbar-hidden' >
-            {selectedJobObj ? (
-              <JobCard selectedJobId={selectedJobObj} />
-            ) : (
+  // } else {
+    return (
+      <main className='w-full mx-auto'>
+        <div>
+          <JobSearchBar />
+        </div>
+        <div className='flex justify-between'>
+          <section className='flex-col w-full xl:max-w-[576px]'>
 
-              <span className='text-xl text-gray-500'>
-                Select a job to view details
-              </span>
+            <Suspense fallback={<div>Loading jobs...</div>}>
+              {jobData?.Jobs?.map((job) => (
+                <LinkContainer
+                  key={job._id}
+                  href={`/?job=${job._id}`}
+                >
+                  <JobDetailCard id={job._id} data={job} />
+                </LinkContainer>
+              )) || <p>No jobs found</p>}
+            </Suspense>
+          </section>
+
+          <section className='w-full text-justify tracking-tight m-2 rounded-md shadow-fine bg-slate-200 cursor-pointer hidden lg:flex'>
+            <div className='bg-slate-200 p-4 h-screen sticky top-0 overflow-y-auto scrollbar-hidden' >
+              {selectedJobObj ? (
+                <JobCard selectedJobId={selectedJobObj} />
+              ) : (
+
+                <span className='text-xl text-gray-500'>
+                  Select a job to view details
+                </span>
 
 
-            )}
+              )}
 
-          </div>
-        </section>
-      </div>
-    </main>
-  )
-}
+            </div>
+          </section>
+        </div>
+      </main>
+    )
+  }
+// }
 
 export default Home 

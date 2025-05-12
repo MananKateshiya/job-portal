@@ -18,12 +18,14 @@ export async function createSession(cookieName: string, payload: string) {
 export async function getCurrentUser(request?: NextRequest) {
 
     const cookieStore = await cookies();
+
     const session = cookieStore.get('session')?.value || request?.cookies.get('session')?.value;
 
     if (session) {
         const user = await decryptToken(session);
         return user;
     }
+    return null;
 }
 
 export async function getCookie(name: string) {
