@@ -30,6 +30,7 @@ export const loginUser = async (loginData: { email: string, password: string }) 
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(loginData),
+        credentials: 'include'
     });
 
     const data = await response.json();

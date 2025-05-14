@@ -1,12 +1,9 @@
-import { logout } from '@/actions/authActions';
 import JobCard from '@/components/JobCard';
 import JobDetailCard from '@/components/JobDetailCard'
 import JobSearchBar from '@/components/JobSearchBar';
 import LinkContainer from '@/components/LinkContainer';
 import { getCriticalInfo } from '@/lib/JobCardDetails/getCriticalInfo';
-import {getCurrentUser } from '@/lib/session';
 import { PaginatedResponse } from '@/models/JobDetailModel';
-import { redirect, RedirectType } from 'next/navigation';
 import React, { Suspense } from 'react'
 
 async function Home({
@@ -14,15 +11,15 @@ async function Home({
 }: {
   searchParams: { job?: string }
 }) {
-
   const { job } = await searchParams;
-  const jobData: PaginatedResponse = await getCriticalInfo({ location: "CA" });
+
+  const jobData: PaginatedResponse = await getCriticalInfo();
   const selectedJobObj = jobData?.Jobs?.find(_job => _job._id === job) || null;
 
     return (
       <main className='w-full mx-auto'>
         <div>
-          <JobSearchBar />
+        <JobSearchBar />
         </div>
         <div className='flex justify-between'>
           <section className='flex-col w-full xl:max-w-[576px]'>

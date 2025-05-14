@@ -58,7 +58,6 @@ function LoginForm() {
 
                     <div className='error text-pink-700 tracking-tight text-center'>{state.serverError}</div>
                 )
-
             }
             <div className='flex flex-col'>
                 <button type='submit' disabled={isPending}

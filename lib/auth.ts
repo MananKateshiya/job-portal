@@ -1,8 +1,8 @@
-import {  jwtVerify, SignJWT } from 'jose';
+import { jwtVerify, SignJWT } from 'jose';
 
 const encodedKey = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export async function generateToken( payload: {userId:string, userRole: string}) {
+export async function generateToken( payload: {userId: string, userRole: string}) {
     return new SignJWT(payload)
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()

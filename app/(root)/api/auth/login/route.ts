@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
     );
 
-    const token = await generateToken({userId: user._id.toString(), userRole: UserType.Candidate}); //generating jwt
-    return NextResponse.json({ token, success: true, }, { status: 200 });
-
+    const token = await generateToken({ userId: user._id.toString(), userRole: UserType.Candidate }); //generating jwt
+    const response = NextResponse.json({ token, success: true, }, { status: 200 });
+    return response;
 }
